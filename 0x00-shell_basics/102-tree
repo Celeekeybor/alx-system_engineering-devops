@@ -1,2 +1,2 @@
 #!/bin/bash
-101-clean_emacs
+mkdir -p welcome/to/school

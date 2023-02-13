@@ -1,2 +1,2 @@
-#!/bin/bash
+#!/bin/bas
 find . -type d -not -name "-" | wc -l

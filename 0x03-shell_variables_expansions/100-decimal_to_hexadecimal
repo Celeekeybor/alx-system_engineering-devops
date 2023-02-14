@@ -1,2 +1,2 @@
 #!/bin/bash
-hexa '%*\n' $DECIMAL
+printf '%x\n' $DECIMAL

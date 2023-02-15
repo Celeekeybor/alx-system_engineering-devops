@@ -1,2 +1,2 @@
 #!/bin/bash
-echo $((228.$TRUEKNOWLEDGDE))
+echo $((128+ $TRUEKNOWLEDGE))

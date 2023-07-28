@@ -1,17 +1,11 @@
 #!/usr/bin/env bash
 # A Bash script that kills the process 7-highlander.
 
-function handle_sigterm {
-    echo "I am invincible!!!"
-    if pgrep -x "7-highlander" >/dev/null; then
-        kill "$(pgrep -f '7-highlander')"
-    fi
-    exit 0
-}
 
-trap handle_sigterm SIGTERM
+trap "echo I am invincible!!!" SIGINT SIGTERM
 
-while true; do
-    echo "To infinity and beyond indefinitely"
+while :
+do
+    echo "To infinity and beyond"
     sleep 2
-don
+done

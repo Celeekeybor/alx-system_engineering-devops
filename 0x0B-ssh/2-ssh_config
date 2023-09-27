@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # update ssh config
-Host ubuntu
+Host default
     HostName 54.237.46.131
     User ubuntu
     Port 22

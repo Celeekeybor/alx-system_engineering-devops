@@ -1,16 +1,8 @@
 #!/usr/bin/env bash
-# setup additional web server
-WHERE="/etc/nginx/sites-available/default"
-ADD="\\\tlocation \/redirect_me {\n\t\treturn 301 https://youtube.com/watch?v=QH2-TGUlwu4;\n\t}\n"
-E404="\\\n\terror_page 404 /custom_404.html;\n\tlocation = /custom_404.html {\n\t\troot /usr/share/nginx/html;\n\t\tinternal;\n\t}\n"
-HEADER="\\\n\tadd_header X-Served-By \$hostname;\n"
+# configure web-02 to be identical to web-01
 
-apt-get -y update
-apt-get install -y nginx
-echo "codingschool School" | sudo tee /usr/share/nginx/html/index.html
-sed -i "30i $ADD" $WHERE
-echo -e "Ceci n'est pas une page\n" | sudo tee /usr/share/nginx/html/custom_404.html
-sed -i "48i $E404" $WHERE
-sed -i "29i $HEADER" $WHERE
-service nginx restart
-
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install nginx -y
+sed -i '/listen 80 default_server/i add_header X-Served-By $HOSTNAME;' /etc/nginx/sites-available/default
+sudo service nginx restart

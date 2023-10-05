@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Define an array of subdomains
+subdomains_all=("www" "lb-01" "web-01" "web-02")
+
+# Function to run 'dig' and display subdomain information
+runDig() {
+    subdomain=$1
+    domain=$2
+
+    # Use 'dig' to fetch DNS information for the specified subdomain
+    # 'grep' filters the ANSWER SECTION, 'tail -1'
+    # 'awk' formats and prints the information,
+    dig "$subdomain.$domain" | grep -A1 'ANSWER SECTION:' |
+    tail -1 | awk -v s="$subdomain" 'BEGIN { FS = " " } ;
+    { print "The subdomain " s " is a " $4 " record and points to " $5 }'
+}
+
+# Check the number of command-line arguments
+if [ $# -eq 1 ]; then
+    # If only a domain is provided, loop through all subdomains and fetch information for each
+    domain="$1"
+    for i in "${subdomains_all[@]}"
+    do
+        runDig "$i" "$domain"
+    done
+elif [ $# -eq 2 ]; then
+    # If both domain and subdomain are provided, fetch information for the specified subdomain
+    domain="$1"
+    subdomain="$2"
+    runDig "$subdomain" "$domain"
+fi
+

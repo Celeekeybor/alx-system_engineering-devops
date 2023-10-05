@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Define an array of subdomains
+# Define an array of subdomains to query
 subdomains_all=("www" "lb-01" "web-01" "web-02")
 
 # Function to run 'dig' and display subdomain information
@@ -29,4 +29,3 @@ elif [ $# -eq 2 ]; then
     subdomain="$2"
     runDig "$subdomain" "$domain"
 fi
-

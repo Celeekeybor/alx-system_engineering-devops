@@ -1,5 +1,5 @@
 
-You have a captain's log due before 2024-01-21 (in 1 day)! Log it now!
+
 0x16. API advanced
 Python
 Scripting

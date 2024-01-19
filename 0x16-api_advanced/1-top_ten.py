@@ -1,27 +1,42 @@
 #!/usr/bin/python3
 """
-Function that queries the Reddit API and prints the titles
-of the first 10 hot posts listed for a given subreddit.
+import
 """
 
 import requests
 
 
 def top_ten(subreddit):
-    """
-    Function that queries the Reddit API
-    - If not a valid subreddit, print None.
-    """
-    req = requests.get(
-        "https://www.reddit.com/r/{}/hot.json".format(subreddit),
-        headers={"User-Agent": "Custom"},
-        params={"limit": 10},
-    )
+    # URL for the Reddit API to get the hot posts
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
 
-    if req.status_code == 200:
-        for get_data in req.json().get("data").get("children"):
-            dat = get_data.get("data")
-            title = dat.get("title")
-            print(title)
+    # Set a custom User-Agent to avoid any issues
+    headers = {'User-Agent': 'Custom User Agent'}
+
+    # Make the API request
+    response = requests.get(url, headers=headers)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        try:
+            # Parse the JSON response
+            data = response.json()
+            # Extract and print the titles of the first 10 hot posts
+            for post in data['data']['children']:
+                print(post['data']['title'])
+        except KeyError:
+            # Invalid subreddit or unexpected JSON structure
+            print(None)
     else:
+        # Invalid subreddit or other API error
         print(None)
+
+
+# Test the function
+if __name__ == '__main__':
+    import sys
+    if len(sys.argv) < 2:
+        print("Please pass an argument for the subreddit to search.")
+    else:
+        subreddit = sys.argv[1]
+        top_ten(subreddit)
